@@ -2,8 +2,7 @@
 Keep constraints in sync
 """
 
-from typing import Optional, List, Tuple, Set, Dict
-from collections import defaultdict
+from typing import List, Tuple, Set, Dict
 
 
 class InvalidConstraint(Exception):
@@ -18,9 +17,6 @@ class Variable:
         self._solver = solver
         self._identifier = identifier
 
-    def __eq__(self, other: 'Variable'):
-        return self._identifier == other._identifier
-
     @property
     def is_constrained(self) -> bool:
         return self in self._solver.constrained_variables()
@@ -32,7 +28,7 @@ class Variable:
     def __hash__(self):
         return hash(self._identifier)
 
-    def __eq__(self, other):
+    def __eq__(self, other: 'Variable'):
         return (self._solver is other._solver and
                 self._identifier == other._identifier)
 
@@ -79,7 +75,7 @@ class Rule:
 
     def is_set_with(self, variables: Set[Variable]):
 
-        for coeff, variable in self._mults:
+        for _, variable in self._mults:
             if variable not in variables:
                 return False
 
@@ -87,7 +83,7 @@ class Rule:
 
     def uses(self, other_variable: Variable) -> bool:
 
-        for coeff, variable in self._mults:
+        for _, variable in self._mults:
             if other_variable == variable:
                 return True
         return False

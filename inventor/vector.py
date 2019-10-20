@@ -1,4 +1,5 @@
 
+import operator
 from typing import Callable
 
 
@@ -19,12 +20,23 @@ class Vector:
     def __mul__(self, other: 'Vector') -> float:
         return sum(self._fuse(self, other, operator.mul)._position)
 
-    def _fuse(self,
-              v1: 'Vector',
-              v2: 'Vector',
-              operator: Callable[[float, float], float]):
+    @property
+    def size(self) -> int:
+        return len(self._position)
 
-        pose = [operator(x, y) for (x, y) in zip(v1._position, v2._position)]
+    def __getitem__(self, i: int) -> float:
+        return self._position[i]
+
+    def _fuse(self,
+              vect1: 'Vector',
+              vect2: 'Vector',
+              operation: Callable[[float, float], float]):
+        assert vect1.size == vect2.size
+
+        pose = []
+
+        for dimension in range(vect1.size):
+            pose.append(operation(vect1[dimension], vect2[dimension]))
 
         return Vector(tuple(pose))
 
@@ -38,4 +50,3 @@ class Vector:
         position = ', '.join(map(str, self._position))
 
         return f'v[{position}]'
-

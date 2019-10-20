@@ -41,3 +41,11 @@ class Line(GeometricElement):
     @property
     def point(self) -> Point:
         return self._point
+
+    @property
+    def is_constrained(self) -> bool:
+
+        if not self._point.is_constrained:
+            return False
+
+        return all(lambda x: x.is_constrained, self._diffs)

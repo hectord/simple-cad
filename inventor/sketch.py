@@ -1,9 +1,7 @@
 
-import unittest
-from typing import List, Tuple
+from typing import Tuple
 
 from solver import Solver, Rule
-from vector import Vector
 from geometric_elements import Point, Line
 
 
@@ -22,10 +20,7 @@ class Sketch:
         return all([x.is_constrained for x in self._geometric_elements])
 
     def add_variable_point(self) -> Point:
-        coordinates = []
-
-        for position in range(3):
-            coordinates.append(self._solver.add_variable())
+        coordinates = [self._solver.add_variable() for i in range(3)]
 
         point = Point(tuple(coordinates))
         self._geometric_elements.append(point)
@@ -69,13 +64,13 @@ class Sketch:
         return Line(point, diff_list)
 
     def add_alignment_constraint(self,
-                                 p1: Point,
-                                 p2: Point,
+                                 point1: Point,
+                                 point2: Point,
                                  dimension: int,
                                  distance: float):
 
-        new_rule = Rule(p1[dimension],
-                        [(1, p2[dimension])],
+        new_rule = Rule(point1[dimension],
+                        [(1, point2[dimension])],
                         distance)
 
         self._solver.add_rule(new_rule)
