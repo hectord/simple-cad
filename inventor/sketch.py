@@ -1,7 +1,8 @@
 
 from typing import Tuple
 
-from solver import Solver, Rule
+from solver.solver import Solver
+from solver.rule import Rule
 from geometric_elements import Point, Line
 
 

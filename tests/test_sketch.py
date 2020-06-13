@@ -2,7 +2,7 @@
 import unittest
 
 from sketch import Sketch
-from solver import InvalidConstraint
+from solver.solver import InvalidConstraint
 
 
 class TestSketchBuilder(unittest.TestCase):

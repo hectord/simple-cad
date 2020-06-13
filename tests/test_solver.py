@@ -1,7 +1,8 @@
 
 import unittest
 
-from solver import Solver, Rule
+from solver.solver import Solver
+from solver.rule import Rule
 
 
 class TestSolver(unittest.TestCase):

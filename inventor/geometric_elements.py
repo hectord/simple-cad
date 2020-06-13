@@ -3,7 +3,7 @@ Graphical elements added in a sketch
 """
 
 from typing import Tuple
-from solver import Variable
+from solver.variable import Variable
 
 
 class GeometricElement:
